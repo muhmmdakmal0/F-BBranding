@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F&B Branding | Full Site</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        /* --- 1. CORE STYLES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial Black', sans-serif; }
+        :root { --yellow: #f6e000; --black: #000000; --white: #ffffff; --green: #00ff00; }
+        body { background-color: var(--yellow); color: var(--black); overflow-x: hidden; }
+
+        /* --- 2. NAVIGATION BAR --- */
+        nav { 
+            position: fixed; top: 0; width: 100%; padding: 30px 50px; 
+            display: flex; justify-content: space-between; align-items: center; 
+            z-index: 1000; mix-blend-mode: exclusion; 
+        }
+        .logo-home { font-size: 1.2rem; font-weight: 900; color: white; letter-spacing: 2px; text-decoration: none; cursor: pointer; }
+        .menu-btn { 
+            width: 50px; height: 50px; background: white; border-radius: 50%; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; 
+        }
+        .menu-btn span { width: 20px; height: 3px; background: black; margin: 2px; }
+
+        /* --- 3. OVERLAY MENU (FORCE BLACK TEXT) --- */
+        #navOverlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--white); z-index: 3000; display: none;
+            padding: 40px 8% 40px 8%;
+        }
+        .overlay-close { position: absolute; top: 30px; right: 50px; font-size: 2.5rem; cursor: pointer; color: var(--black); font-weight: 900; }
+        .overlay-container { display: flex; flex-direction: column; justify-content: space-between; height: 100%; width: 100%; max-width: 1400px; margin: 0 auto; }
+        
+        .main-links a { 
+            display: flex; align-items: center; font-size: 5.5vw; text-decoration: none; color: var(--black) !important;
+            line-height: 1.1; transition: 0.3s; cursor: pointer;
+        }
+        .main-links a::before { content: "→"; color: var(--green); font-size: 4vw; margin-right: 20px; opacity: 0; transform: translateX(-20px); transition: 0.3s ease; }
+        .main-links a:hover { transform: translateX(30px); }
+        .main-links a:hover::before { opacity: 1; transform: translateX(0); }
+
+        .bottom-nav-group { display: flex; justify-content: space-between; align-items: center; border-top: 2px solid var(--black); padding-top: 20px; }
+        .sub-nav { display: flex; gap: 20px; }
+        .sub-nav a { text-decoration: none; color: var(--black) !important; font-size: 0.9rem; font-weight: 900; text-transform: uppercase; }
+        .social-links { display: flex; gap: 10px; }
+        .social-icon { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--black); display: flex; align-items: center; justify-content: center; text-decoration: none; color: var(--black); font-size: 1.2rem; transition: 0.3s; }
+        .social-icon:hover { background: var(--black); color: var(--white); }
+
+        /* --- 4. SECTIONS & PORTFOLIO --- */
+        section { position: relative; min-height: 100vh; width: 100%; display: flex; flex-direction: column; justify-content: center; padding: 100px 8%; }
+        .black-bg { background-color: var(--black); color: var(--white); }
+        .big-text { font-size: 14vw; line-height: 0.85; text-transform: uppercase; margin-bottom: 20px; text-align: center; }
+        
+        .portfolio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; background: var(--black); }
+        .portfolio-item { position: relative; aspect-ratio: 1 / 1; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; cursor: pointer; }
+        .item-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; transition: 0.8s ease; z-index: 1; filter: brightness(0.7); }
+        .portfolio-item:hover .item-bg { transform: scale(1.05); filter: brightness(0.9); }
+        .item-info { position: relative; z-index: 2; padding: 40px; color: white; }
+        .item-name { font-size: 2.5rem; text-transform: uppercase; }
+
+        /* --- 5. EXPANDED MODAL (GALLERY STYLE) --- */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--white); z-index: 4000; display: none; padding: 100px 10%; overflow-y: auto; color: var(--black); }
+        .modal-close { position: fixed; top: 40px; right: 40px; font-size: 1.2rem; cursor: pointer; font-weight: 900; background: black; color: white; padding: 12px 25px; border-radius: 40px; z-index: 4100; }
+        .modal-image-stack { display: flex; flex-direction: column; gap: 40px; margin-top: 50px; width: 100%; }
+        .modal-image-stack img { width: 100%; height: auto; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+
+        /* --- 6. FOOTER --- */
+        .footer-bottom { height: 90vh; align-items: center; justify-content: center; text-align: center; }
+        .contact-strip { position: fixed; bottom: 0; width: 100%; padding: 15px; background: var(--yellow); border-top: 2px solid var(--black); display: flex; justify-content: space-around; font-size: 0.75rem; font-weight: 900; z-index: 100; }
+        #cursor { position: fixed; width: 15px; height: 15px; background: #fff; border-radius: 50%; pointer-events: none; z-index: 9999; mix-blend-mode: difference; }
+    </style>
+</head>
+<body>
+
+    <div id="cursor"></div>
+
+    <nav>
+        <a href="#" class="logo-home">F&B BRANDING.</a>
+        <div class="menu-btn" onclick="toggleOverlay()">
+            <span></span><span></span>
+        </div>
+    </nav>
+
+    <div id="navOverlay">
+        <div class="overlay-close" onclick="toggleOverlay()">✕</div>
+        <div class="overlay-container">
+            <div class="main-links">
+                <a href="#">WEB DESIGN</a>
+                <a href="#">BRANDING</a>
+                <a href="#">SOCIAL MEDIA</a>
+                <a href="#">CAMPAIGNS</a>
+                <a href="#">SEARCH MARKETING</a>
+                <a href="#">VIDEO CONTENT</a>
+            </div>
+            <div class="bottom-nav-group">
+                <div class="sub-nav">
+                    <a href="#" onclick="toggleOverlay()">HOME</a>
+                    <a href="#">ABOUT</a>
+                    <a href="#">PROJECTS</a>
+                    <a href="#">BLOG</a>
+                    <a href="#">CONTACT</a>
+                </div>
+                <div class="social-links">
+                    <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <section><h1 class="big-text scroll-anim">BIGGER</h1></section>
+        <section class="black-bg"><h1 class="big-text scroll-anim">BOLDER</h1></section>
+
+        <section class="black-bg" style="display: block;">
+            <div style="padding: 0 0 40px 0;"><h1 style="font-size: 5vw; text-transform: uppercase;">Crafted with our Own — Hands & Ideas</h1></div>
+            <div class="portfolio-grid" id="gridContainer">
+                </div>
+        </section>
+
+        <section class="footer-bottom">
+            <h1 class="big-text">HELLO</h1>
+            <div style="width: 120px; height: 120px; background: black; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-weight: bold;">LET'S GO</div>
+        </section>
+    </main>
+
+    <div class="contact-strip">
+        <span>EMAIL US AT F&B@BRANDING.COM.MY</span>
+        <span>SAY HELLO AT +6011 3450 6789</span>
+    </div>
+
+    <div id="projectModal" class="modal">
+        <div class="modal-close" onclick="closeModal()">CLOSE X</div>
+        <div id="modalContent"></div>
+    </div>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // DATA: Now with arrays of images for the major brands
+        const brandData = {
+            tealive: { 
+                title: "Tealive", 
+                images: ["tealiveclickable.jpg", "tealive1.jpg", "tealive2.jpg"], 
+                desc: "Crafting digital experiences for Malaysia's top tea brand." 
+            },
+            marrybrown: { 
+                title: "Marrybrown", 
+                images: ["marrybrownclickable.jpg", "mb1.jpg", "mb2.jpg", "mb3.jpg"], 
+                desc: "Bringing a fresh, bold look to local flavors." 
+            },
+            pakmat: { 
+                title: "Pak Mat Western", 
+                images: ["pakmatwesternclickable.jpg", "pakmat1.jpg", "pakmat2.jpg", "pakmat3.jpg"], 
+                desc: "Viral marketing and high-impact visual content." 
+            },
+            ayamgepuk: { 
+                title: "Ayam Gepuk", 
+                images: ["ayamgepukclickable.jpg", "ayam1.jpg", "ayam2.jpg", "ayam3.jpg"], 
+                desc: "Authentic branding for the regional favorite." 
+            },
+        
+        };
+
+        // Render Portfolio Grid
+        const grid = document.getElementById('gridContainer');
+        Object.keys(brandData).forEach(key => {
+            grid.innerHTML += `
+                <div class="portfolio-item" onclick="openModal('${key}')">
+                    <div class="item-bg" style="background-image: url('${brandData[key].images[0]}');"></div>
+                    <div class="item-info"><div class="item-name">${brandData[key].title}</div></div>
+                </div>`;
+        });
+
+        function toggleOverlay() {
+            const overlay = document.getElementById('navOverlay');
+            const isOpening = overlay.style.display !== 'block';
+            overlay.style.display = isOpening ? 'block' : 'none';
+            document.body.style.overflow = isOpening ? 'hidden' : 'auto';
+        }
+
+        function openModal(key) {
+            const data = brandData[key];
+            // Create the vertical stack of images
+            let imageList = data.images.map(img => `<img src="${img}" alt="work preview">`).join('');
+            
+            document.getElementById('modalContent').innerHTML = `
+                <div style="max-width: 1200px; margin: 0 auto;">
+                    <h1 style="font-size: 8vw; color: black; line-height: 1;">${data.title}</h1>
+                    <p style="margin: 30px 0; font-family: Arial; font-weight: bold; font-size: 1.2rem;">${data.desc}</p>
+                    <div class="modal-image-stack">${imageList}</div>
+                    <div style="height: 100px;"></div>
+                </div>`;
+            document.getElementById('projectModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('projectModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Mouse Tracker
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => { gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 }); });
+
+        // Animations
+        gsap.utils.toArray(".scroll-anim").forEach((text) => {
+            gsap.from(text, { scrollTrigger: { trigger: text, start: "top 90%", scrub: 1 }, y: 100, opacity: 0 });
+        });
+    </script>
+</body>
+</html>
