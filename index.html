@@ -28,7 +28,7 @@
         }
         .menu-btn span { width: 20px; height: 3px; background: black; margin: 2px; }
 
-        /* --- 3. OVERLAY MENU (FORCE BLACK TEXT) --- */
+        /* --- 3. OVERLAY MENU --- */
         #navOverlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--white); z-index: 3000; display: none;
@@ -57,6 +57,56 @@
         .black-bg { background-color: var(--black); color: var(--white); }
         .big-text { font-size: 14vw; line-height: 0.85; text-transform: uppercase; margin-bottom: 20px; text-align: center; }
         
+        /* --- 3-LAYER LOGO MARQUEE (UPDATED) --- */
+        .marquee-container {
+            width: 100vw;
+            margin-left: calc(-8%);
+            overflow: hidden;
+            background: var(--yellow);
+            padding: 60px 0;
+            display: flex;
+            flex-direction: column; /* Stack the 3 rows vertically */
+            gap: 20px; /* Space between rows */
+            border-top: 6px solid #000;
+            border-bottom: 6px solid #000;
+            z-index: 5;
+        }
+
+        .marquee-row {
+            display: flex;
+            white-space: nowrap;
+        }
+
+        /* Speed Control: 12 seconds for high impact */
+        .scroll-left { animation: scrollLeft 12s linear infinite; }
+        .scroll-right { animation: scrollRight 12s linear infinite; }
+
+        .logo-badge {
+            flex-shrink: 0;
+            width: 110px;
+            height: 110px;
+            background: var(--white);
+            border: 4px solid var(--black); /* Double layer visual */
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 15px;
+            transition: 0.3s ease;
+        }
+        .logo-badge img { width: 65%; height: auto; }
+        .logo-badge:hover { transform: scale(1.1) rotate(5deg); cursor: pointer; }
+
+        @keyframes scrollLeft {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        @keyframes scrollRight {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+
+        /* --- PORTFOLIO & MODAL STYLES --- */
         .portfolio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; background: var(--black); }
         .portfolio-item { position: relative; aspect-ratio: 1 / 1; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; cursor: pointer; }
         .item-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; transition: 0.8s ease; z-index: 1; filter: brightness(0.7); }
@@ -64,13 +114,11 @@
         .item-info { position: relative; z-index: 2; padding: 40px; color: white; }
         .item-name { font-size: 2.5rem; text-transform: uppercase; }
 
-        /* --- 5. EXPANDED MODAL (GALLERY STYLE) --- */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--white); z-index: 4000; display: none; padding: 100px 10%; overflow-y: auto; color: var(--black); }
         .modal-close { position: fixed; top: 40px; right: 40px; font-size: 1.2rem; cursor: pointer; font-weight: 900; background: black; color: white; padding: 12px 25px; border-radius: 40px; z-index: 4100; }
         .modal-image-stack { display: flex; flex-direction: column; gap: 40px; margin-top: 50px; width: 100%; }
         .modal-image-stack img { width: 100%; height: auto; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
 
-        /* --- 6. FOOTER --- */
         .footer-bottom { height: 90vh; align-items: center; justify-content: center; text-align: center; }
         .contact-strip { position: fixed; bottom: 0; width: 100%; padding: 15px; background: var(--yellow); border-top: 2px solid var(--black); display: flex; justify-content: space-around; font-size: 0.75rem; font-weight: 900; z-index: 100; }
         #cursor { position: fixed; width: 15px; height: 15px; background: #fff; border-radius: 50%; pointer-events: none; z-index: 9999; mix-blend-mode: difference; }
@@ -92,7 +140,7 @@
         <div class="overlay-container">
             <div class="main-links">
                 <a href="#">WEB DESIGN</a>
-                <a href="#">BRANDING</a>
+                <a href="subscribe.html">BRANDING</a>
                 <a href="#">SOCIAL MEDIA</a>
                 <a href="#">CAMPAIGNS</a>
                 <a href="#">SEARCH MARKETING</a>
@@ -101,7 +149,7 @@
             <div class="bottom-nav-group">
                 <div class="sub-nav">
                     <a href="#" onclick="toggleOverlay()">HOME</a>
-                    <a href="#">ABOUT</a>
+                    <a href="about.html">ABOUT</a>
                     <a href="#">PROJECTS</a>
                     <a href="#">BLOG</a>
                     <a href="#">CONTACT</a>
@@ -118,12 +166,53 @@
 
     <main>
         <section><h1 class="big-text scroll-anim">BIGGER</h1></section>
+        
+        <div class="marquee-container">
+            <div class="marquee-row scroll-left">
+                <div class="logo-badge"><img src="pakmatwestern.png" alt="Brand"></div>
+                <div class="logo-badge"><img src="tealive.png" alt="Brand"></div>
+                <div class="logo-badge"><img src="marrybrown.png" alt="Brand"></div>
+                <div class="logo-badge"><img src="ayamgepuk.png" alt="Brand"></div>
+                <div class="logo-badge"><img src="mixue.png" alt="Brand"></div>
+                <div class="logo-badge"><img src="pakmatwestern.png" alt="Brand"></div>
+                <div class="logo-badge"><img src="tealive.png" alt="Brand"></div>
+                <div class="logo-badge"><img src="marrybrown.png" alt="Brand"></div>
+                <div class="logo-badge"><img src="ayamgepuk.png" alt="Brand"></div>
+                <div class="logo-badge"><img src="mixue.png" alt="Brand"></div>
+            </div>
+
+            <div class="marquee-row scroll-right">
+                <div class="logo-badge"><img src="tealive.png" alt="Brand"></div>
+                <div class="logo-badge"><img src="pakmatwestern.png" alt="Brand"></div>
+                <div class="logo-badge"><img src="mixue.png" alt="Brand"></div>
+                <div class="logo-badge"><img src="marrybrown.png" alt="Brand"></div>
+                <div class="logo-badge"><img src="ayamgepuk.png" alt="Brand"></div>
+                <div class="logo-badge"><img src="tealive.png" alt="Brand"></div>
+                <div class="logo-badge"><img src="pakmatwestern.png" alt="Brand"></div>
+                <div class="logo-badge"><img src="mixue.png" alt="Brand"></div>
+                <div class="logo-badge"><img src="marrybrown.png" alt="Brand"></div>
+                <div class="logo-badge"><img src="ayamgepuk.png" alt="Brand"></div>
+            </div>
+
+            <div class="marquee-row scroll-left">
+                <div class="logo-badge"><img src="marrybrown.png" alt="Brand"></div>
+                <div class="logo-badge"><img src="ayamgepuk.png" alt="Brand"></div>
+                <div class="logo-badge"><img src="pakmatwestern.png" alt="Brand"></div>
+                <div class="logo-badge"><img src="mixue.png" alt="Brand"></div>
+                <div class="logo-badge"><img src="tealive.png" alt="Brand"></div>
+                <div class="logo-badge"><img src="marrybrown.png" alt="Brand"></div>
+                <div class="logo-badge"><img src="ayamgepuk.png" alt="Brand"></div>
+                <div class="logo-badge"><img src="pakmatwestern.png" alt="Brand"></div>
+                <div class="logo-badge"><img src="mixue.png" alt="Brand"></div>
+                <div class="logo-badge"><img src="tealive.png" alt="Brand"></div>
+            </div>
+        </div>
+
         <section class="black-bg"><h1 class="big-text scroll-anim">BOLDER</h1></section>
 
         <section class="black-bg" style="display: block;">
             <div style="padding: 0 0 40px 0;"><h1 style="font-size: 5vw; text-transform: uppercase;">Crafted with our Own — Hands & Ideas</h1></div>
-            <div class="portfolio-grid" id="gridContainer">
-                </div>
+            <div class="portfolio-grid" id="gridContainer"></div>
         </section>
 
         <section class="footer-bottom">
@@ -145,32 +234,13 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // DATA: Now with arrays of images for the major brands
         const brandData = {
-            tealive: { 
-                title: "Tealive", 
-                images: ["tealiveclickable.jpg", "tealive1.jpg", "tealive2.jpg"], 
-                desc: "Crafting digital experiences for Malaysia's top tea brand." 
-            },
-            marrybrown: { 
-                title: "Marrybrown", 
-                images: ["marrybrownclickable.jpg", "mb1.jpg", "mb2.jpg", "mb3.jpg"], 
-                desc: "Bringing a fresh, bold look to local flavors." 
-            },
-            pakmat: { 
-                title: "Pak Mat Western", 
-                images: ["pakmatwesternclickable.jpg", "pakmat1.jpg", "pakmat2.jpg", "pakmat3.jpg"], 
-                desc: "Viral marketing and high-impact visual content." 
-            },
-            ayamgepuk: { 
-                title: "Ayam Gepuk", 
-                images: ["ayamgepukclickable.jpg", "ayam1.jpg", "ayam2.jpg", "ayam3.jpg"], 
-                desc: "Authentic branding for the regional favorite." 
-            },
-        
+            tealive: { title: "Tealive", images: ["tealiveclickable.jpg", "tealive1.jpg", "tealive2.jpg"], desc: "Crafting digital experiences for Malaysia's top tea brand." },
+            marrybrown: { title: "Marrybrown", images: ["marrybrownclickable.jpg", "mb1.jpg", "mb2.jpg", "mb3.jpg"], desc: "Bringing a fresh, bold look to local flavors." },
+            pakmat: { title: "Pak Mat Western", images: ["pakmatwesternclickable.jpg", "pakmat1.jpg", "pakmat2.jpg", "pakmat3.jpg"], desc: "Viral marketing and high-impact visual content." },
+            ayamgepuk: { title: "Ayam Gepuk", images: ["ayamgepukclickable.jpg", "ayam1.jpg", "ayam2.jpg", "ayam3.jpg"], desc: "Authentic branding for the regional favorite." },
         };
 
-        // Render Portfolio Grid
         const grid = document.getElementById('gridContainer');
         Object.keys(brandData).forEach(key => {
             grid.innerHTML += `
@@ -189,9 +259,7 @@
 
         function openModal(key) {
             const data = brandData[key];
-            // Create the vertical stack of images
             let imageList = data.images.map(img => `<img src="${img}" alt="work preview">`).join('');
-            
             document.getElementById('modalContent').innerHTML = `
                 <div style="max-width: 1200px; margin: 0 auto;">
                     <h1 style="font-size: 8vw; color: black; line-height: 1;">${data.title}</h1>
@@ -208,11 +276,9 @@
             document.body.style.overflow = 'auto';
         }
 
-        // Mouse Tracker
         const cursor = document.getElementById('cursor');
         document.addEventListener('mousemove', (e) => { gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 }); });
 
-        // Animations
         gsap.utils.toArray(".scroll-anim").forEach((text) => {
             gsap.from(text, { scrollTrigger: { trigger: text, start: "top 90%", scrub: 1 }, y: 100, opacity: 0 });
         });
