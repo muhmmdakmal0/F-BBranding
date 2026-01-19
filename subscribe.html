@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscribe | F&B Branding Network</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial Black', sans-serif; }
+        body { background-color: #f6e000; color: #000; overflow-x: hidden; }
+
+        /* --- NAVIGATION --- */
+        nav { padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; background: #000; color: #fff; position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid #f6e000; }
+        .logo { font-size: 1.5rem; letter-spacing: -1px; }
+        .nav-links a { color: #fff; text-decoration: none; margin-left: 20px; font-size: 0.8rem; text-transform: uppercase; }
+
+        /* --- PRICING SECTION --- */
+        .pricing-section { width: 100%; padding: 60px 0; text-align: center; }
+        .pricing-header h1 { font-size: 3.5rem; text-transform: uppercase; margin-bottom: 40px; }
+
+        .pricing-wrapper {
+            display: table;
+            width: 95%;
+            max-width: 1200px;
+            margin: 0 auto;
+            border-spacing: 20px 0;
+        }
+
+        .plan-card {
+            display: table-cell;
+            width: 33.33%;
+            background: #fff;
+            border: 6px solid #000;
+            padding: 40px 25px;
+            vertical-align: top;
+            position: relative;
+            text-align: left;
+        }
+
+        .plan-card:hover { transform: translateY(-10px); box-shadow: 12px 12px 0px #000; }
+        .badge { position: absolute; top: -20px; right: 20px; background: #000; color: #f6e000; padding: 5px 15px; font-size: 0.7rem; text-transform: uppercase; border: 2px solid #000; }
+        .price-area { min-height: 120px; margin-bottom: 20px; }
+        .actual-price { font-size: 3rem; display: block; line-height: 1; }
+        .old-price { font-size: 1.1rem; text-decoration: line-through; color: #888; }
+        .discount-tag { background: #ff4d4d; color: #fff; padding: 3px 8px; font-size: 0.8rem; vertical-align: middle; margin-left: 5px; }
+        .cycle { font-family: sans-serif; font-weight: bold; font-size: 0.85rem; color: #555; display: block; margin-top: 5px; }
+
+        .features { list-style: none; margin-bottom: 30px; }
+        .features li { font-family: sans-serif; font-size: 0.9rem; font-weight: bold; padding: 12px 0; border-bottom: 1px solid #eee; display: flex; align-items: center; }
+        .features li i { margin-right: 12px; font-size: 1.1rem; }
+        .fa-check-circle { color: #27ae60; }
+        .fa-times-circle { color: #eb5757; }
+
+        .btn {
+            display: block; width: 100%; background: #000; color: #fff; text-align: center;
+            padding: 18px; text-transform: uppercase; cursor: pointer; border: none; font-weight: bold;
+        }
+        .btn:hover { background: #f6e000; color: #000; }
+        .express { background: #000; color: #fff; }
+        .express .plan-name { color: #f6e000; }
+        .express .btn { background: #f6e000; color: #000; }
+
+        /* --- CHECKOUT MODAL --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center; z-index: 2000;
+        }
+        .checkout-box {
+            background: #fff; border: 6px solid #000; width: 90%; max-width: 500px; padding: 40px; position: relative;
+        }
+        .checkout-box h2 { text-transform: uppercase; margin-bottom: 20px; font-size: 1.5rem; }
+        .input-group { margin-bottom: 15px; text-align: left; }
+        .input-group label { display: block; font-family: sans-serif; font-weight: bold; font-size: 0.8rem; margin-bottom: 5px; text-transform: uppercase; }
+        .input-group input { width: 100%; padding: 12px; border: 3px solid #000; font-family: sans-serif; font-weight: bold; }
+        
+        .row { display: flex; gap: 10px; }
+
+        /* --- SUCCESS OVERLAY --- */
+        #success-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #f6e000; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 3000;
+        }
+        #success-modal h2 { font-size: 4rem; text-transform: uppercase; }
+
+        @media (max-width: 850px) { .pricing-wrapper { display: block; } .plan-card { display: block; width: 100%; margin-bottom: 30px; } }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">F&B.NETWORK</div>
+        <div class="nav-links">
+            <a href="index.html">Feed</a>
+            <a href="about.html">About</a>
+            <a href="subscribe.html" style="color: #f6e000;">Join Pro</a>
+        </div>
+    </nav>
+
+    <div class="pricing-section">
+        <div class="pricing-header"><h1>CHOOSE YOUR ACCESS</h1></div>
+        <div class="pricing-wrapper">
+            <div class="plan-card">
+                <h2 class="plan-name">Free Trial</h2>
+                <div class="price-area"><span class="actual-price">RM0</span><span class="cycle">7-Day Access</span></div>
+                <ul class="features">
+                    <li><i class="fas fa-check-circle"></i> Standard Feed Access</li>
+                    <li><i class="fas fa-check-circle"></i> Basic Analytics</li>
+                    <li><i class="fas fa-times-circle"></i> No Premium Tools</li>
+                    <li><i class="fas fa-times-circle"></i> Slow Editing Queue</li>
+                </ul>
+                <button class="btn" onclick="directSuccess()">Start Trial</button>
+            </div>
+
+            <div class="plan-card">
+                <div class="badge">Best Value</div>
+                <h2 class="plan-name">Annual Pro</h2>
+                <div class="price-area">
+                    <span class="old-price">RM1,200</span><span class="discount-tag">-30% OFF</span>
+                    <span class="actual-price">RM840</span><span class="cycle">Billed Yearly</span>
+                </div>
+                <ul class="features">
+                    <li><i class="fas fa-check-circle"></i> Full Premium Access</li>
+                    <li><i class="fas fa-check-circle"></i> Priority Content Sync</li>
+                    <li><i class="fas fa-check-circle"></i> 48h Priority Editing</li>
+                    <li><i class="fas fa-check-circle"></i> No Express Feed</li>
+                </ul>
+                <button class="btn" onclick="openCheckout('Annual Pro - RM840')">Join Annual</button>
+            </div>
+
+            <div class="plan-card express">
+                <div class="badge" style="background:#f6e000; color:#000;">Fastest Track</div>
+                <h2 class="plan-name">Express Pro</h2>
+                <div class="price-area">
+                    <span class="actual-price">RM1,140</span><span class="cycle">Pro + Express Pass</span>
+                </div>
+                <ul class="features">
+                    <li><i class="fas fa-check-circle"></i> Editing < 6 Hours</li>
+                     <li><i class="fas fa-check-circle"></i> Daily Influencer Sync</li>
+                    <li><i class="fas fa-check-circle"></i> VIP Support Line</li>
+                    <li><i class="fas fa-check-circle"></i> Dedicated Manager</li>
+                </ul>
+                <button class="btn" onclick="openCheckout('Express Pro - RM1,140')">Go Express</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="checkout-modal">
+        <div class="checkout-box">
+            <h2 id="selected-plan-title">Checkout</h2>
+            <div class="input-group">
+                <label>Full Name</label>
+                <input type="text" placeholder="Your Name" id="cust-name">
+            </div>
+            <div class="input-group">
+                <label>Email Address</label>
+                <input type="email" placeholder="john@example.com">
+            </div>
+            <div class="input-group">
+                <label>Card Number</label>
+                <input type="text" placeholder="0000 0000 0000 0000">
+            </div>
+            <div class="row">
+                <div class="input-group">
+                    <label>Expiry</label>
+                    <input type="text" placeholder="MM/YY">
+                </div>
+                <div class="input-group">
+                    <label>CVC</label>
+                    <input type="text" placeholder="123">
+                </div>
+            </div>
+            <button class="btn" onclick="directSuccess()">Pay & Subscribe</button>
+            <p onclick="closeCheckout()" style="margin-top:15px; cursor:pointer; font-size:0.7rem; font-family:sans-serif; text-transform:uppercase; text-decoration:underline;">Cancel</p>
+        </div>
+    </div>
+
+    <div id="success-modal">
+        <i class="fas fa-check-circle" style="font-size: 5rem; margin-bottom: 20px;"></i>
+        <h2>SUCCESS!</h2>
+        <p id="welcome-msg" style="font-weight: bold; margin-top: 10px;">Welcome to the Network. Redirecting...</p>
+    </div>
+
+    <script>
+        function openCheckout(planName) {
+            document.getElementById('selected-plan-title').innerText = planName;
+            document.getElementById('checkout-modal').style.display = 'flex';
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkout-modal').style.display = 'none';
+        }
+
+        function directSuccess() {
+            const name = document.getElementById('cust-name').value;
+            if(name) {
+                document.getElementById('welcome-msg').innerText = "Welcome " + name + "! Redirecting to Homepage...";
+            }
+            
+            document.getElementById('checkout-modal').style.display = 'none';
+            document.getElementById('success-modal').style.display = 'flex';
+            
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 3000);
+        }
+
+        gsap.from(".plan-card", { duration: 1, y: 50, opacity: 0, stagger: 0.2 });
+    </script>
+</body>
+</html>
