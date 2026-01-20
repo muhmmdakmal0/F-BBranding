@@ -25,20 +25,11 @@
             font-size: clamp(2.5rem, 8vw, 6rem); 
             line-height: 0.9; 
             text-transform: uppercase; 
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            z-index: 5; /* Text stays in front */
+            display: flex; flex-wrap: wrap; justify-content: center; z-index: 5;
         }
         .char { display: inline-block; position: relative; }
 
-        /* Icons Styling - Increased opacity slightly so they are visible but subtle */
-        .floating-icons i { 
-            position: absolute; 
-            color: rgba(0,0,0,0.15); 
-            font-size: 5rem; 
-            z-index: 1; 
-        }
+        .floating-icons i { position: absolute; color: rgba(0,0,0,0.15); font-size: 5rem; z-index: 1; }
 
         /* --- MARQUEE --- */
         .marquee { background: #000; color: #fff; padding: 15px 0; overflow: hidden; white-space: nowrap; border-top: 5px solid #000; border-bottom: 5px solid #000; position: relative; z-index: 10; }
@@ -63,10 +54,70 @@
         .video-wrapper video { width: 100%; height: 100%; object-fit: cover; }
         .video-footer { padding: 20px; background: #fff; color: #000; text-align: center; font-size: 1rem; font-weight: bold; border-top: 5px solid #000; text-transform: uppercase; }
 
-        /* --- OUR NETWORK --- */
-        .story-section { padding: 100px 10%; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; background: #f6e000; align-items: center; border-top: 8px solid #000; }
+        /* --- OUR NETWORK (3 LAYERED STACKS WITH EMOJIS) --- */
+        .story-section { padding: 100px 10%; display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; background: #f6e000; align-items: flex-start; border-top: 8px solid #000; }
         .story-text h2 { font-size: 3.5rem; margin-bottom: 20px; line-height: 1; }
         .story-text p { font-family: sans-serif; font-weight: 800; line-height: 1.8; color: #000; margin-bottom: 20px; }
+
+        .story-image-container { position: relative; height: 950px; width: 100%; }
+
+        .image-stack {
+            position: absolute;
+            width: 100%;
+            height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .stack-top { top: 0; left: 0; }
+        .stack-middle { top: 280px; left: 40px; }
+        .stack-bottom { top: 560px; left: -20px; }
+
+        .stack-img {
+            position: absolute;
+            width: 75%;
+            border: 6px solid #000;
+            background: #fff;
+            opacity: 0; 
+            pointer-events: none;
+            transition: opacity 0.5s ease, transform 0.7s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s ease;
+        }
+
+        .img-1 { transform: scale(0.8) rotate(-10deg); z-index: 1; }
+        .img-2 { transform: scale(0.8) rotate(0deg); z-index: 2; }
+        .img-3 { transform: scale(0.8) rotate(10deg); z-index: 3; }
+
+        /* Reveal Logic */
+        .image-stack:hover .stack-img { opacity: 1; pointer-events: auto; }
+
+        .stack-top:hover .img-1 { transform: translate(-70px, -40px) rotate(-15deg); }
+        .stack-top:hover .img-2 { transform: translate(0px, 0px) rotate(0deg); }
+        .stack-top:hover .img-3 { transform: translate(70px, 40px) rotate(15deg); box-shadow: 15px 15px 0px #000; }
+
+        .stack-middle:hover .img-1 { transform: translate(0px, -60px) rotate(-8deg); }
+        .stack-middle:hover .img-2 { transform: translate(0px, 0px) rotate(0deg); }
+        .stack-middle:hover .img-3 { transform: translate(0px, 60px) rotate(8deg); box-shadow: 15px 15px 0px #000; }
+
+        .stack-bottom:hover .img-1 { transform: translate(-50px, 50px) rotate(-20deg); }
+        .stack-bottom:hover .img-2 { transform: translate(0px, 0px) rotate(0deg); }
+        .stack-bottom:hover .img-3 { transform: translate(50px, -50px) rotate(20deg); box-shadow: 15px 15px 0px #000; }
+
+        /* Emoji Indicator Styling */
+        .emoji-indicator {
+            font-size: 3.5rem;
+            opacity: 0.3;
+            animation: emojiPulse 2s infinite ease-in-out, emojiRotate 10s infinite linear;
+            filter: grayscale(1);
+            transition: 0.3s;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .image-stack:hover .emoji-indicator { opacity: 0; transform: scale(0.5); }
+
+        @keyframes emojiPulse { 0%, 100% { transform: scale(1); opacity: 0.3; } 50% { transform: scale(1.2); opacity: 0.5; } }
+        @keyframes emojiRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         /* --- FEED --- */
         .social-feed { padding: 100px 5%; background: #fff; border-top: 8px solid #000; }
@@ -100,9 +151,7 @@
             <i class="fab fa-facebook floating" style="bottom: 15%; left: 10%;"></i>
             <i class="fab fa-youtube floating" style="bottom: 25%; right: 5%;"></i>
         </div>
-        
         <p style="background:#000; color:#fff; padding: 5px 15px; margin-bottom: 20px; z-index: 10; position: relative;">ONLINE SOCIAL NETWORK</p>
-        
         <div class="explode-container">
             <h1 class="explode-text" id="targetText">WE SCALE BRANDS GLOBALLY</h1>
         </div>
@@ -128,9 +177,7 @@
                 <div style="color:#fff; font-size: 0.7rem; font-family: sans-serif; opacity: 0.6;">aboutus1.mp4</div>
             </div>
             <div class="video-wrapper">
-                <video autoplay muted loop playsinline>
-                    <source src="aboutus1.mp4" type="video/mp4">
-                </video>
+                <video autoplay muted loop playsinline><source src="aboutus1.mp4" type="video/mp4"></video>
             </div>
             <div class="video-footer">OUR TEAM PROMOTING LOCAL FLAVORS TO THE WORLD STAGE</div>
         </div>
@@ -141,9 +188,30 @@
             <h2>OUR NETWORK</h2>
             <p>F&B Branding Team is a powerhouse specialized in promoting food brands abroad. We don't just market; we build a synergy between local culinary giants and global social networks.</p>
             <p>By leveraging Online Social Networking, we bridge the gap between Asian taste and Western markets, ensuring every collab and every post reaches millions.</p>
+            <p>Our presence spans across major culinary hubs, providing real-time data and viral content creation for our partners.</p>
         </div>
-        <div class="story-image">
-            <img src="aboutus2.jpg" style="width: 100%; border: 6px solid #000; box-shadow: 15px 15px 0px #000;" alt="Network">
+        
+        <div class="story-image-container">
+            <div class="image-stack stack-top">
+                <div class="emoji-indicator">🍔</div>
+                <img src="aboutus2.jpg" class="stack-img img-1" alt="Work 1">
+                <img src="aboutus2.jpg" class="stack-img img-2" alt="Work 2">
+                <img src="aboutus2.jpg" class="stack-img img-3" alt="Work 3">
+            </div>
+
+            <div class="image-stack stack-middle">
+                <div class="emoji-indicator">🧋</div>
+                <img src="tealiveclickable.jpg" class="stack-img img-1" alt="Work 4">
+                <img src="tealiveclickable.jpg" class="stack-img img-2" alt="Work 5">
+                <img src="tealive4.jpg" class="stack-img img-3" alt="Work 6">
+            </div>
+
+            <div class="image-stack stack-bottom">
+                <div class="emoji-indicator">🍗</div>
+                <img src="marrybrownclickable.jpg" class="stack-img img-1" alt="Work 7">
+                <img src="marrybrownclickable.jpg" class="stack-img img-2" alt="Work 8">
+                <img src="mb4.jpg" class="stack-img img-3" alt="Work 9">
+            </div>
         </div>
     </section>
 
@@ -159,16 +227,12 @@
     <footer>
         <div class="footer-logo">F&B.BRANDING</div>
         <div class="social-links">
-            <i class="fab fa-facebook-f"></i>
-            <i class="fab fa-instagram"></i>
-            <i class="fab fa-tiktok"></i>
-            <i class="fab fa-youtube"></i>
+            <i class="fab fa-facebook-f"></i> <i class="fab fa-instagram"></i> <i class="fab fa-tiktok"></i> <i class="fab fa-youtube"></i>
         </div>
         <div class="copyright">&copy; 2026 F&B BRANDING TEAM. ALL RIGHTS RESERVED.</div>
     </footer>
 
     <script>
-        // 1. TEXT SPLITTING FOR EXPLOSION
         const textElement = document.getElementById('targetText');
         const words = textElement.innerText.split(' ');
         textElement.innerHTML = '';
@@ -186,7 +250,6 @@
             textElement.appendChild(wordSpan);
         });
 
-        // 2. THE EXPLOSION ANIMATION
         gsap.from(".char", {
             duration: 1.2, opacity: 0, scale: 0,
             y: "random(-500, 500)", x: "random(-500, 500)",
@@ -194,29 +257,16 @@
             delay: 0.3, stagger: 0.03, ease: "back.out(1.7)"
         });
 
-        // 3. FIXED FLOATING ICONS ANIMATION
-        // We use a loop to give each icon a slightly different feel
         gsap.utils.toArray(".floating").forEach((icon, i) => {
             gsap.to(icon, {
-                x: "random(-40, 40)",
-                y: "random(-40, 40)",
-                rotation: "random(-15, 15)",
-                duration: "random(2, 4)",
-                repeat: -1,
-                yoyo: true,
-                ease: "sine.inOut",
-                delay: i * 0.2
+                x: "random(-40, 40)", y: "random(-40, 40)", rotation: "random(-15, 15)",
+                duration: "random(2, 4)", repeat: -1, yoyo: true, ease: "sine.inOut", delay: i * 0.2
             });
         });
 
-        // 4. SCROLL TRIGGER FOR FEED
         gsap.registerPlugin(ScrollTrigger);
         gsap.from(".feed-card", { 
-            scrollTrigger: ".social-feed", 
-            y: 50, 
-            opacity: 0, 
-            stagger: 0.2, 
-            duration: 0.8 
+            scrollTrigger: ".social-feed", y: 50, opacity: 0, stagger: 0.2, duration: 0.8 
         });
     </script>
 </body>
